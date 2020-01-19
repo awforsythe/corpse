@@ -10,17 +10,35 @@ class Canvas extends React.Component {
   }
 
   handleMouseDown = (event) => {
-    this.mouseDown = true;
+    if (!this.mouseDown) {
+      this.mouseDown = true;
+      const { x, y } = this.getCoords(event);
+      const ctx = this.getContext2d();
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
   };
 
   handleMouseUp = (event) => {
-    this.mouseDown = false;
+    if (this.mouseDown) {
+      this.mouseDown = false;
+      const { x, y } = this.getCoords(event);
+      const ctx = this.getContext2d();
+      ctx.strokeStyle = '#1d3940';
+      ctx.lineWidth = 5;
+      ctx.stroke();
+      ctx.strokeStyle = '#23d3ff';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+    }
   };
 
   handleMouseMove = (event) => {
     if (this.mouseDown) {
       const { x, y } = this.getCoords(event);
       const ctx = this.getContext2d();
+      ctx.lineTo(x, y);
+
       const size = 8;
       ctx.fillStyle = '#1d3940';
       ctx.fillRect(x - (size / 3), y - (size / 3), size, size);
