@@ -9,8 +9,12 @@ class Canvas extends React.Component {
     this.mouseDown = false;
   }
 
-  handleClick = (event) => {
+  handleMouseDown = (event) => {
     this.mouseDown = true;
+  };
+
+  handleMouseUp = (event) => {
+    this.mouseDown = false;
   };
 
   handleMouseMove = (event) => {
@@ -41,7 +45,8 @@ class Canvas extends React.Component {
     return (
       <canvas
         ref={this.ref}
-        onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
+        onMouseUp={this.handleMouseUp}
         onMouseMove={this.handleMouseMove}
         width={width}
         height={height}
