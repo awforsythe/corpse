@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', (req, res, next) => {
-  res.send('OK whatever');
+  res.render('index');
 });
 
 module.exports = app;
