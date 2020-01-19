@@ -6,16 +6,21 @@ class Canvas extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
+    this.mouseDown = false;
   }
 
   handleClick = (event) => {
-    event.preventDefault();
-    const { x, y } = this.getCoords(event);
-    const ctx = this.getContext2d();
+    this.mouseDown = true;
+  };
 
-    const size = 8;
-    ctx.fillStyle = '#ccff66';
-    ctx.fillRect(x - (size / 2), y - (size / 2), size, size);
+  handleMouseMove = (event) => {
+    if (this.mouseDown) {
+      const { x, y } = this.getCoords(event);
+      const ctx = this.getContext2d();
+      const size = 8;
+      ctx.fillStyle = '#ccff66';
+      ctx.fillRect(x - (size / 2), y - (size / 2), size, size);
+    }
   };
 
   getCoords(event) {
@@ -35,6 +40,7 @@ class Canvas extends React.Component {
       <canvas
         ref={this.ref}
         onClick={this.handleClick}
+        onMouseMove={this.handleMouseMove}
         width={width}
         height={height}
         style={{ border: '1px solid #ccc' }}
