@@ -4,7 +4,8 @@
   "description": "eat my corpse",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "start-dev": "nodemon ./bin/www"
   },
   "repository": {
     "type": "git",
