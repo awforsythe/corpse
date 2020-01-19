@@ -2,16 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
+import convert from 'color-convert';
+
 class Canvas extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
     this.mouseDown = false;
+    this.color = `#${this.getRandomColor()}`;
   }
 
   handleMouseDown = (event) => {
     if (!this.mouseDown) {
       this.mouseDown = true;
+      this.color = `#${this.getRandomColor()}`;
       const { x, y } = this.getCoords(event);
       const ctx = this.getContext2d();
       ctx.beginPath();
@@ -24,10 +28,7 @@ class Canvas extends React.Component {
       this.mouseDown = false;
       const { x, y } = this.getCoords(event);
       const ctx = this.getContext2d();
-      ctx.strokeStyle = '#1d3940';
-      ctx.lineWidth = 5;
-      ctx.stroke();
-      ctx.strokeStyle = '#23d3ff';
+      ctx.strokeStyle = this.color;
       ctx.lineWidth = 4;
       ctx.stroke();
     }
@@ -40,9 +41,9 @@ class Canvas extends React.Component {
       ctx.lineTo(x, y);
 
       const size = 8;
-      ctx.fillStyle = '#1d3940';
+      ctx.fillStyle = '#333333';
       ctx.fillRect(x - (size / 3), y - (size / 3), size, size);
-      ctx.fillStyle = '#23d3ff';
+      ctx.fillStyle = this.color;
       ctx.fillRect(x - (size / 2), y - (size / 2), size, size);
     }
   };
@@ -56,6 +57,11 @@ class Canvas extends React.Component {
 
   getContext2d() {
     return this.ref.current.getContext('2d');
+  }
+
+  getRandomColor() {
+    const rand = (lo, hi) => Math.floor(Math.random() * (hi - lo) + lo);
+    return convert.hsv.hex(rand(0, 255), rand(128, 255), rand(64, 255));
   }
 
   render() {
