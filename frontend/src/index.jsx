@@ -10,15 +10,24 @@ class Canvas extends React.Component {
 
   handleClick = (event) => {
     event.preventDefault();
-    const rect = event.target.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const size = 8;
+    const { x, y } = this.getCoords(event);
+    const ctx = this.getContext2d();
 
-    const ctx = this.ref.current.getContext('2d');
+    const size = 8;
     ctx.fillStyle = '#ccff66';
     ctx.fillRect(x - (size / 2), y - (size / 2), size, size);
   };
+
+  getCoords(event) {
+    const rect = event.target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    return { x, y };
+  }
+
+  getContext2d() {
+    return this.ref.current.getContext('2d');
+  }
 
   render() {
     const { width, height } = this.props;
