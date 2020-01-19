@@ -18,7 +18,9 @@ class Canvas extends React.Component {
       const { x, y } = this.getCoords(event);
       const ctx = this.getContext2d();
       const size = 8;
-      ctx.fillStyle = '#ccff66';
+      ctx.fillStyle = '#1d3940';
+      ctx.fillRect(x - (size / 3), y - (size / 3), size, size);
+      ctx.fillStyle = '#23d3ff';
       ctx.fillRect(x - (size / 2), y - (size / 2), size, size);
     }
   };
